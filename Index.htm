@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <title>Naasik Platform - MVP Prototype</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0B0F19',
+                            card: '#161F30',
+                            accent: '#10B981',
+                            gold: '#D97706',
+                            border: '#1E293B',
+                            textMuted: '#94A3B8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0B0F19;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0F19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10B981;
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col antialiased">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="bg-brand-card border-b border-brand-border px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+        <div class="flex items-center space-x-4">
+            
+            <!-- LOGO CONTAINER: W3Schools Friendly Placeholder -->
+            <!-- REPLACE THE 'src' BELOW WITH YOUR ACTUAL PATH (e.g., logo.png or logo.svg) LATER -->
+            <div class="relative w-10 h-10 flex items-center justify-center bg-brand-dark rounded-lg overflow-hidden border border-brand-border">
+                <img id="platformLogo" 
+                     src="https://via.placeholder.com/40/D97706/FFFFFF?text=N" 
+                     alt="Naasik Logo" 
+                     class="w-full h-full object-contain">
+            </div>
+            
+            <div>
+                <h1 class="text-lg font-bold tracking-wide uppercase flex items-center">
+                    Naasik Platform 
+                    <span class="ml-2 text-xs px-2 py-0.5 bg-brand-gold/20 text-brand-gold rounded border border-brand-gold/30">MVP PROTOTYPE</span>
+                </h1>
+                <p class="text-xs text-brand-textMuted">Local Centers Data Management & Operational KPIs</p>
+            </div>
+        </div>
+
+        <!-- Integration Status badges -->
+        <div class="flex items-center space-x-3 text-xs">
+            <span class="flex items-center px-3 py-1.5 bg-brand-accent/10 text-brand-accent rounded-full border border-brand-accent/20">
+                <span class="w-2 h-2 rounded-full bg-brand-accent mr-2 animate-pulse"></span>
+                Active: Local Database Sandbox
+            </span>
+            <span class="flex items-center px-3 py-1.5 bg-rose-500/10 text-rose-400 rounded-full border border-rose-500/20">
+                <i data-lucide="shield-alert" class="w-3.5 h-3.5 mr-1"></i>
+                External Integration Offline (Secured Mode)
+            </span>
+        </div>
+    </header>
+
+    <!-- MAIN INTERACTIVE HUB -->
+    <main class="flex-1 p-6 grid grid-cols-12 gap-6 max-w-7xl mx-auto w-full">
+        
+        <!-- LEFT COLUMN: COUNTER STAFF DATA ENTRY -->
+        <section class="col-span-4 bg-brand-card rounded-xl border border-brand-border p-5 flex flex-col space-y-4 shadow-xl">
+            <div class="border-b border-brand-border pb-3 flex items-center justify-between">
+                <h2 class="font-bold text-md text-brand-gold flex items-center">
+                    <i data-lucide="file-text" class="w-5 h-5 mr-2"></i>
+                    Counter Entry Form (نموذج الموظف)
+                </h2>
+                <span class="text-xs text-brand-textMuted">Real-time Logging</span>
+            </div>
+
+            <form id="ticketForm" class="space-y-3.5 flex-1">
+                <!-- Center Location -->
+                <div>
+                    <label class="block text-xs font-semibold text-brand-textMuted mb-1.5">Center Location *</label>
+                    <select id="centerLocation" required class="w-full bg-brand-dark border border-brand-border rounded-lg p-2.5 text-sm text-slate-100 focus:outline-none focus:border-brand-accent">
+                        <option value="Haram Central (مركز الحرم)">Haram Central (مركز الحرم)</option>
+                        <option value="Jabal Omar (مركز جبل عمر)">Jabal Omar (مركز جبل عمر)</option>
+                        <option value="Mina Center (مركز منى)">Mina Center (مركز منى)</option>
+                        <option value="Aziziyah Center (مركز العزيزية)">Aziziyah Center (مركز العزيزية)</option>
+                    </select>
+                </div>
+
+                <!-- Query Category -->
+                <div>
+                    <label class="block text-xs font-semibold text-brand-textMuted mb-1.5">Query Category *</label>
+                    <select id="queryCategory" required class="w-full bg-brand-dark border border-brand-border rounded-lg p-2.5 text-sm text-slate-100 focus:outline-none focus:border-brand-accent">
+                        <option value="Lost Pilgrim (مفقودين)">Lost Pilgrim (مفقودين)</option>
+                        <option value="Accommodation Issue (مشكلة سكن)">Accommodation Issue (مشكلة سكن)</option>
+                        <option value="Transport Delay (تأخر النقل)">Transport Delay (تأخر النقل)</option>
+                        <option value="General Inquiry (استفسار عام)">General Inquiry (استفسار عام)</option>
+                    </select>
+                </div>
+
+                <!-- Duration Metrics -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-brand-textMuted mb-1.5">Wait Time (Mins) *</label>
+                        <input type="number" id="waitTime" min="1" max="180" placeholder="e.g. 10" required class="w-full bg-brand-dark border border-brand-border rounded-lg p-2.5 text-sm text-slate-100 focus:outline-none focus:border-brand-accent">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-brand-textMuted mb-1.5">Handling Time (Mins) *</label>
+                        <input type="number" id="handlingTime" min="1" max="180" placeholder="e.g. 15" required class="w-full bg-brand-dark border border-brand-border rounded-lg p-2.5 text-sm text-slate-100 focus:outline-none focus:border-brand-accent">
+                    </div>
+                </div>
+
+                <!-- Department Route -->
+                <div>
+                    <label class="block text-xs font-semibold text-brand-textMuted mb-1.5">Associated Department *</label>
+                    <select id="departmentRoute" required class="w-full bg-brand-dark border border-brand-border rounded-lg p-2.5 text-sm text-slate-100 focus:outline-none focus:border-brand-accent">
+                        <option value="Inaya Ground Team (الفريق الميداني)">Inaya Ground Team (الفريق الميداني)</option>
+                        <option value="Mock Ministry Support (الدعم الافتراضي)">Mock Ministry Support (الدعم الافتراضي)</option>
+                        <option value="Mock Transport Coordinator (التنسيق الافتراضي للنقل)">Mock Transport Coordinator (التنسيق الافتراضي للنقل)</option>
+                    </select>
+                </div>
+
+                <!-- Status Resolution -->
+                <div>
+                    <label class="block text-xs font-semibold text-brand-textMuted mb-1.5">Status Resolution *</label>
+                    <input type="hidden" id="statusSelection" value="Resolved">
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" id="resolvedBtn" class="flex items-center justify-center p-2.5 bg-brand-dark border border-brand-accent rounded-lg cursor-pointer transition text-brand-accent font-semibold text-sm">
+                            Resolved (محلولة)
+                        </button>
+                        <button type="button" id="escalatedBtn" class="flex items-center justify-center p-2.5 bg-brand-dark border border-brand-border rounded-lg cursor-pointer transition text-brand-textMuted font-semibold text-sm hover:border-rose-500 hover:text-rose-400">
+                            Escalated (مصعدة)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Employee Feedback -->
+                <div>
+                    <label class="block text-xs font-semibold text-brand-textMuted mb-1.5">Employee Feedback Notes</label>
+                    <textarea id="staffNotes" rows="2" placeholder="Write any field notes or details..." class="w-full bg-brand-dark border border-brand-border rounded-lg p-2.5 text-sm text-slate-100 focus:outline-none focus:border-brand-accent resize-none"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-gradient-to-r from-brand-accent to-emerald-600 text-white font-bold py-3 rounded-lg text-sm shadow-lg hover:brightness-110 transition flex items-center justify-center">
+                    <i data-lucide="plus-circle" class="w-4.5 h-4.5 mr-2"></i>
+                    Log Ticket into Live DB
+                </button>
+            </form>
+        </section>
+
+        <!-- RIGHT COLUMN: MASTER KPI MONITOR & ANALYTICS DASHBOARD -->
+        <section class="col-span-8 flex flex-col space-y-6">
+            
+            <!-- Live Counter Metrics -->
+            <div class="grid grid-cols-4 gap-4">
+                <div class="bg-brand-card p-4 rounded-xl border border-brand-border flex flex-col justify-between shadow-md">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-brand-textMuted">Total Tickets</span>
+                        <i data-lucide="layers" class="w-4 h-4 text-brand-accent"></i>
+                    </div>
+                    <span class="text-2xl font-bold mt-2" id="totalTicketsCount">0</span>
+                    <span class="text-xs text-brand-accent mt-1 flex items-center">
+                        <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mr-1 animate-pulse"></span> Dynamic Sandbox DB
+                    </span>
+                </div>
+
+                <div class="bg-brand-card p-4 rounded-xl border border-brand-border flex flex-col justify-between shadow-md">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-brand-textMuted">Avg Wait Time</span>
+                        <i data-lucide="clock" class="w-4 h-4 text-brand-gold"></i>
+                    </div>
+                    <span class="text-2xl font-bold mt-2"><span id="avgWaitTimeText">0</span>m</span>
+                    <span class="text-xs text-brand-textMuted mt-1">Goal: &lt; 15 mins</span>
+                </div>
+
+                <div class="bg-brand-card p-4 rounded-xl border border-brand-border flex flex-col justify-between shadow-md">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-brand-textMuted">Avg Handling Time</span>
+                        <i data-lucide="activity" class="w-4 h-4 text-blue-400"></i>
+                    </div>
+                    <span class="text-2xl font-bold mt-2"><span id="avgHandlingTimeText">0</span>m</span>
+                    <span class="text-xs text-brand-textMuted mt-1">Goal: &lt; 12 mins</span>
+                </div>
+
+                <div class="bg-brand-card p-4 rounded-xl border border-brand-border flex flex-col justify-between shadow-md">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-brand-textMuted">Resolution Rate</span>
+                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                    </div>
+                    <span class="text-2xl font-bold mt-2"><span id="resolutionRateText">0</span>%</span>
+                    <span class="text-xs text-brand-accent mt-1" id="escalatedCountText">0% Escalated</span>
+                </div>
+            </div>
+
+            <!-- Graphical KPI Charts Grid -->
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Most Frequent Issues Chart -->
+                <div class="bg-brand-card p-4 rounded-xl border border-brand-border shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-sm text-slate-100 flex items-center">
+                            <i data-lucide="bar-chart-3" class="w-4 h-4 mr-2 text-brand-accent"></i>
+                            Most Frequent Issues (أبرز المشكلات)
+                        </h3>
+                    </div>
+                    <div class="h-44 flex items-center justify-center relative">
+                        <div id="noDataOverlay1" class="absolute inset-0 bg-brand-card/95 flex flex-col items-center justify-center z-10 rounded-lg">
+                            <i data-lucide="info" class="w-6 h-6 text-brand-textMuted mb-1"></i>
+                            <span class="text-xs text-brand-textMuted">Waiting for local data entries...</span>
+                        </div>
+                        <canvas id="issuesChart" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Peak Congestion Hours Chart -->
+                <div class="bg-brand-card p-4 rounded-xl border border-brand-border shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-sm text-slate-100 flex items-center">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-2 text-brand-gold"></i>
+                            Peak Congestion Hours (أوقات الذروة)
+                        </h3>
+                    </div>
+                    <div class="h-44 flex items-center justify-center relative">
+                        <div id="noDataOverlay2" class="absolute inset-0 bg-brand-card/95 flex flex-col items-center justify-center z-10 rounded-lg">
+                            <i data-lucide="info" class="w-6 h-6 text-brand-textMuted mb-1"></i>
+                            <span class="text-xs text-brand-textMuted">Waiting for local data entries...</span>
+                        </div>
+                        <canvas id="hoursChart" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity Table -->
+            <div class="bg-brand-card rounded-xl border border-brand-border p-4 shadow-md flex-1 flex flex-col">
+                <div class="flex items-center justify-between mb-3 border-b border-brand-border pb-2">
+                    <h3 class="font-bold text-sm text-slate-100 flex items-center">
+                        <i data-lucide="database" class="w-4.5 h-4.5 mr-2 text-brand-accent"></i>
+                        Live Sandbox Database Entries (البيانات المتاحة حاليًا)
+                    </h3>
+                    <span class="text-xs text-brand-accent flex items-center bg-brand-accent/10 px-2 py-0.5 rounded border border-brand-accent/20">
+                        <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mr-1.5 animate-pulse"></span>
+                        Real-time Data Flow
+                    </span>
+                </div>
+
+                <div class="overflow-y-auto flex-1 max-h-52">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="text-brand-textMuted border-b border-brand-border">
+                                <th class="pb-2 font-semibold">Timestamp</th>
+                                <th class="pb-2 font-semibold">Center Location</th>
+                                <th class="pb-2 font-semibold">Category</th>
+                                <th class="pb-2 font-semibold">Wait / Handl.</th>
+                                <th class="pb-2 font-semibold">Associated Route</th>
+                                <th class="pb-2 font-semibold text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="liveLogTableBody" class="divide-y divide-brand-border/40">
+                            <tr id="emptyTablePlaceholder">
+                                <td colspan="6" class="py-8 text-center text-brand-textMuted text-xs italic">
+                                    No records logged yet. Enter a ticket on the left form to populate the database.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- FOOTER SECTION & INITIATIVE FORM -->
+    <footer class="bg-brand-card border-t border-brand-border p-5 mt-auto">
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-12 gap-6 items-center">
+            
+            <!-- Left: Members' Initiative Submission Screen -->
+            <div class="col-span-5 bg-brand-dark p-4 rounded-xl border border-brand-border flex flex-col space-y-3">
+                <h3 class="font-bold text-xs text-brand-gold flex items-center">
+                    <i data-lucide="lightbulb" class="w-4 h-4 mr-2"></i>
+                    Member Technical Initiatives Portal (رفع مبادرات الأعضاء)
+                </h3>
+                <form id="initiativeForm" class="flex items-stretch space-x-2">
+                    <input type="text" id="initiativeTitle" placeholder="Suggest a feature or idea..." required class="flex-1 bg-brand-card border border-brand-border rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-brand-accent">
+                    <button type="submit" class="bg-brand-gold text-white font-bold px-4 py-2 rounded-lg text-xs hover:bg-amber-600 transition flex items-center whitespace-nowrap">
+                        Submit Idea
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right: Dynamic Showcase of submitted initiatives -->
+            <div class="col-span-7 flex flex-col space-y-2">
+                <span class="text-xs font-semibold text-brand-textMuted">Submitted Member Suggestions:</span>
+                <div class="flex space-x-2 overflow-x-auto py-1" id="initiativeBox">
+                    <div class="bg-brand-dark border border-brand-border rounded-lg p-2.5 min-w-[200px] flex-shrink-0 text-xs">
+                        <div class="font-bold text-brand-accent">AI Auto-Translation Interface</div>
+                        <p class="text-[10px] text-brand-textMuted mt-1">Assisting Non-Arabic pilgrims instantly.</p>
+                    </div>
+                    <div class="bg-brand-dark border border-brand-border rounded-lg p-2.5 min-w-[200px] flex-shrink-0 text-xs">
+                        <div class="font-bold text-brand-accent">WhatsApp OCR Processor</div>
+                        <p class="text-[10px] text-brand-textMuted mt-1">Reading group snapshots instantly.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- LOGIC SYSTEM -->
+    <script>
+        const mockDb = [];
+        let totalCount = 0;
+        let cumulativeWait = 0; 
+        let cumulativeHandling = 0;
+        let resolvedCount = 0;
+
+        const categoryStats = {
+            'Lost Pilgrim (مفقودين)': 0,
+            'Accommodation Issue (مشكلة سكن)': 0,
+            'Transport Delay (تأخر النقل)': 0,
+            'General Inquiry (استفسار عام)': 0
+        };
+
+        const hourlyStats = {
+            '12AM': 0, '2AM': 0, '4AM': 0, '6AM': 0, '8AM': 0, '10AM': 0,
+            '12PM': 0, '2PM': 0, '4PM': 0, '6PM': 0, '8PM': 0, '10PM': 0
+        };
+
+        let issueChartInstance = null;
+        let hoursChartInstance = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Safe initialization of Lucide Icons
+            if (window.lucide) {
+                try {
+                    window.lucide.createIcons();
+                } catch (e) {
+                    console.warn("Lucide icons failed:", e);
+                }
+            }
+
+            initCharts();
+            setupInteractiveEvents();
+        });
+
+        function initCharts() {
+            if (!window.Chart) return;
+
+            try {
+                const ctxIssues = document.getElementById('issuesChart').getContext('2d');
+                issueChartInstance = new Chart(ctxIssues, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(categoryStats).map(lbl => lbl.split(' (')[0]),
+                        datasets: [{
+                            label: 'Total Incidents',
+                            data: Object.values(categoryStats),
+                            backgroundColor: '#10B981',
+                            borderRadius: 6,
+                            barThickness: 24,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { grid: { color: '#1E293B' }, ticks: { color: '#94A3B8', font: { size: 10 }, stepSize: 1, precision: 0 } },
+                            x: { grid: { display: false }, ticks: { color: '#94A3B8', font: { size: 10 } } }
+                        }
+                    }
+                });
+
+                const ctxHours = document.getElementById('hoursChart').getContext('2d');
+                hoursChartInstance = new Chart(ctxHours, {
+                    type: 'line',
+                    data: {
+                        labels: Object.keys(hourlyStats),
+                        datasets: [{
+                            data: Object.values(hourlyStats),
+                            borderColor: '#D97706',
+                            backgroundColor: 'rgba(217, 119, 6, 0.15)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { grid: { color: '#1E293B' }, ticks: { color: '#94A3B8', font: { size: 10 }, stepSize: 1, precision: 0 } },
+                            x: { grid: { display: false }, ticks: { color: '#94A3B8', font: { size: 10 } } }
+                        }
+                    }
+                });
+            } catch (err) {
+                console.error("Chart creation failed:", err);
+            }
+        }
+
+        function createTableRowElement(item) {
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-brand-dark/50 transition border-b border-brand-border/40 py-2.5";
+            
+            const isResolved = item.status === 'Resolved';
+            const badgeClass = isResolved ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-rose-500/10 text-rose-400 border-rose-500/20";
+            
+            tr.innerHTML = `
+                <td class="py-2.5 text-brand-textMuted">${item.time}</td>
+                <td class="py-2.5 font-semibold text-slate-100">${item.center}</td>
+                <td class="py-2.5">${item.category}</td>
+                <td class="py-2.5 font-medium"><span class="text-brand-gold">${item.wait}m</span> / <span class="text-blue-400">${item.handling}m</span></td>
+                <td class="py-2.5 text-brand-textMuted">${item.route}</td>
+                <td class="py-2.5 text-center">
+                    <span class="px-2 py-0.5 rounded border text-[10px] font-bold ${badgeClass}">
+                        ${item.status}
+                    </span>
+                </td>
+            `;
+            return tr;
+        }
+
+        function updateDashboardMetrics() {
+            document.getElementById('totalTicketsCount').innerText = totalCount;
+            
+            const avgWait = totalCount > 0 ? Math.round(cumulativeWait / totalCount) : 0;
+            const avgHandling = totalCount > 0 ? Math.round(cumulativeHandling / totalCount) : 0;
+            const resRate = totalCount > 0 ? Math.round((resolvedCount / totalCount) * 100) : 0;
+
+            document.getElementById('avgWaitTimeText').innerText = avgWait;
+            document.getElementById('avgHandlingTimeText').innerText = avgHandling;
+            document.getElementById('resolutionRateText').innerText = resRate;
+            document.getElementById('escalatedCountText').innerText = `${100 - resRate}% Escalated`;
+
+            const overlay1 = document.getElementById('noDataOverlay1');
+            const overlay2 = document.getElementById('noDataOverlay2');
+
+            if (totalCount > 0) {
+                if (overlay1) overlay1.style.display = 'none';
+                if (overlay2) overlay2.style.display = 'none';
+            } else {
+                if (overlay1) overlay1.style.display = 'flex';
+                if (overlay2) overlay2.style.display = 'flex';
+            }
+        }
+
+        function getHourKey(date) {
+            const hour = date.getHours();
+            if (hour < 2) return '12AM';
+            if (hour < 4) return '2AM';
+            if (hour < 6) return '4AM';
+            if (hour < 8) return '6AM';
+            if (hour < 10) return '8AM';
+            if (hour < 12) return '10AM';
+            if (hour < 14) return '12PM';
+            if (hour < 16) return '2PM';
+            if (hour < 18) return '4PM';
+            if (hour < 20) return '6PM';
+            if (hour < 22) return '8PM';
+            return '10PM';
+        }
+
+        function setupInteractiveEvents() {
+            const form = document.getElementById('ticketForm');
+            const initiativeForm = document.getElementById('initiativeForm');
+
+            const resolvedBtn = document.getElementById('resolvedBtn');
+            const escalatedBtn = document.getElementById('escalatedBtn');
+            const statusSelection = document.getElementById('statusSelection');
+
+            if (resolvedBtn && escalatedBtn && statusSelection) {
+                resolvedBtn.addEventListener('click', () => {
+                    statusSelection.value = "Resolved";
+                    resolvedBtn.className = "flex items-center justify-center p-2.5 bg-brand-dark border border-brand-accent rounded-lg cursor-pointer transition text-brand-accent font-semibold text-sm";
+                    escalatedBtn.className = "flex items-center justify-center p-2.5 bg-brand-dark border border-brand-border rounded-lg cursor-pointer transition text-brand-textMuted font-semibold text-sm hover:border-rose-500 hover:text-rose-400";
+                });
+
+                escalatedBtn.addEventListener('click', () => {
+                    statusSelection.value = "Escalated";
+                    escalatedBtn.className = "flex items-center justify-center p-2.5 bg-brand-dark border border-rose-500 rounded-lg cursor-pointer transition text-rose-400 font-semibold text-sm";
+                    resolvedBtn.className = "flex items-center justify-center p-2.5 bg-brand-dark border border-brand-border rounded-lg cursor-pointer transition text-brand-textMuted font-semibold text-sm hover:border-brand-accent hover:text-brand-accent";
+                });
+            }
+
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const placeholder = document.getElementById('emptyTablePlaceholder');
+                    if (placeholder) placeholder.remove();
+
+                    const center = document.getElementById('centerLocation').value;
+                    const category = document.getElementById('queryCategory').value;
+                    const wait = parseInt(document.getElementById('waitTime').value) || 0;
+                    const handling = parseInt(document.getElementById('handlingTime').value) || 0;
+                    const route = document.getElementById('departmentRoute').value;
+                    const status = statusSelection ? statusSelection.value : 'Resolved';
+
+                    const now = new Date();
+                    const cleanTimeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                    const newRecord = {
+                        id: Math.floor(Math.random() * 900) + 100,
+                        time: cleanTimeStr,
+                        center: center,
+                        category: category,
+                        wait: wait,
+                        handling: handling,
+                        route: route,
+                        status: status
+                    };
+
+                    mockDb.unshift(newRecord);
+
+                    const tableBody = document.getElementById('liveLogTableBody');
+                    if (tableBody) {
+                        tableBody.insertBefore(createTableRowElement(newRecord), tableBody.firstChild);
+                    }
+
+                    totalCount++;
+                    cumulativeWait += wait;
+                    cumulativeHandling += handling;
+                    if (status === 'Resolved') resolvedCount++;
+
+                    if (issueChartInstance) {
+                        categoryStats[category] = (categoryStats[category] || 0) + 1;
+                        issueChartInstance.data.datasets[0].data = Object.values(categoryStats);
+                        issueChartInstance.update();
+                    }
+
+                    if (hoursChartInstance) {
+                        const hourKey = getHourKey(now);
+                        hourlyStats[hourKey] = (hourlyStats[hourKey] || 0) + 1;
+                        hoursChartInstance.data.datasets[0].data = Object.values(hourlyStats);
+                        hoursChartInstance.update();
+                    }
+
+                    updateDashboardMetrics();
+                    document.getElementById('waitTime').value = '';
+                    document.getElementById('handlingTime').value = '';
+                    
+                    const notesField = document.getElementById('staffNotes');
+                    if (notesField) notesField.value = '';
+
+                    const btn = form.querySelector('button[type="submit"]');
+                    if (btn) {
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML = `<i data-lucide="check" class="w-4.5 h-4.5 mr-2"></i> Synced to Sandbox DB!`;
+                        btn.classList.add('from-emerald-500', 'to-teal-500');
+                        
+                        if (window.lucide) {
+                            try { window.lucide.createIcons(); } catch(err){}
+                        }
+
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.classList.remove('from-emerald-500', 'to-teal-500');
+                            if (window.lucide) {
+                                try { window.lucide.createIcons(); } catch(err){}
+                            }
+                        }, 1800);
+                    }
+                });
+            }
+
+            if (initiativeForm) {
+                initiativeForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const inputField = document.getElementById('initiativeTitle');
+                    if (!inputField) return;
+
+                    const val = inputField.value;
+                    const card = document.createElement('div');
+                    card.className = "bg-brand-dark border border-brand-accent/50 rounded-lg p-2.5 min-w-[200px] flex-shrink-0 text-xs animate-pulse";
+                    card.innerHTML = `
+                        <div class="font-bold text-brand-gold">Member Idea</div>
+                        <p class="text-[10px] text-brand-textMuted mt-1">${val}</p>
+                    `;
+
+                    const box = document.getElementById('initiativeBox');
+                    if (box) {
+                        box.insertBefore(card, box.firstChild);
+                    }
+
+                    setTimeout(() => {
+                        card.classList.remove('animate-pulse', 'border-brand-accent/50');
+                    }, 1000);
+
+                    inputField.value = '';
+                });
+            }
+        }
+    </script>
+</body>
+</html>
