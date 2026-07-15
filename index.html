@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <title>بوابة ناسك الرقمية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nasek: {
+                            bg: '#F4F7FA', // الخلفية الرمادية الفاتحة والناعمة كما في الصورة
+                            darkBlue: '#1B355A', // الأزرق الداكن للنصوص الرئيسية
+                            teal: '#0EA5E9', // اللون الفيروزي للأيقونات والعناصر النشطة
+                            border: '#E2E8F0', // حدود البطاقات الخفيفة
+                            textMuted: '#64748B' // النصوص التوضيحية الرمادية
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F4F7FA;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col justify-between antialiased p-6">
+
+    <!-- القسم العلوي: الهيدر المتكامل والمطابق للصورة -->
+    <header class="bg-white rounded-2xl border border-nasek-border p-5 shadow-sm grid grid-cols-12 gap-4 items-center mb-6">
+        
+        <!-- 1. الشعار (أقصى اليمين في واجهة العربي) -->
+        <div class="col-span-3 flex flex-col items-center justify-center border-l border-slate-100 pl-4">
+            <img src="logo.png" alt="ناسك - خدمة ضيوف الرحمن شرف لنا" class="h-20 object-contain" onerror="this.src='https://via.placeholder.com/180x80/ffffff/1b355a?text=NASEK'">
+        </div>
+
+        <!-- 2. بيانات الموظف (أحمد محمد) -->
+        <div class="col-span-3 flex items-start space-x-reverse space-x-3 border-l border-slate-100 px-4 text-xs">
+            <div class="bg-sky-50 text-nasek-teal p-2 rounded-full mt-1">
+                <i data-lucide="user" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-1">
+                <h2 class="text-base font-bold text-nasek-darkBlue">أحمد محمد</h2>
+                <p class="text-nasek-textMuted"><span class="font-semibold text-slate-700">المركز:</span> مركز نسك عناية السد</p>
+                <p class="text-nasek-textMuted"><span class="font-semibold text-slate-700">الفئة:</span> خدمة المستفيدين</p>
+                <p class="text-nasek-textMuted"><span class="font-semibold text-slate-700">نوع الوردية:</span> الوردية الصباحية</p>
+                <p class="text-nasek-textMuted"><span class="font-semibold text-slate-700">رقم الموظف:</span> 100245</p>
+            </div>
+        </div>
+
+        <!-- 3. مشرف الوردية المناوب (تفاعلي منسدل) -->
+        <div class="col-span-2 flex flex-col border-l border-slate-100 px-4">
+            <div class="flex items-center space-x-reverse space-x-2 mb-1.5 justify-center">
+                <div class="bg-emerald-50 text-emerald-500 p-1 rounded-full">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                </div>
+                <span class="text-xs font-bold text-nasek-darkBlue">مشرف الوردية المناوب</span>
+            </div>
+            <select class="bg-slate-50 border border-nasek-border rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:border-nasek-teal cursor-pointer">
+                <option>أ. سعود العتيبي</option>
+                <option>أ. خالد الشهري</option>
+                <option>أ. محمد القحطاني</option>
+            </select>
+        </div>
+
+        <!-- 4. اسم الوردية -->
+        <div class="col-span-2 flex items-center space-x-reverse space-x-3 border-l border-slate-100 px-4 text-xs">
+            <div class="bg-sky-50 text-nasek-teal p-2.5 rounded-full">
+                <i data-lucide="users" class="w-5 h-5"></i>
+            </div>
+            <div>
+                <span class="block text-[10px] text-nasek-textMuted font-bold">اسم الوردية</span>
+                <span class="block font-bold text-nasek-darkBlue text-sm mt-0.5">الوردية الصباحية</span>
+                <span class="block text-[9px] text-slate-400 mt-0.5">07:00 ص - 03:00 م</span>
+            </div>
+        </div>
+
+        <!-- 5. الوقت واليوم -->
+        <div class="col-span-2 flex flex-col space-y-2.5 pr-4 text-xs">
+            <!-- الوقت -->
+            <div class="flex items-center justify-between">
+                <span class="text-[10px] text-nasek-textMuted font-bold">الوقت</span>
+                <div class="flex items-center space-x-reverse space-x-1.5 font-bold text-nasek-darkBlue">
+                    <span>10:30:45 ص</span>
+                    <i data-lucide="clock" class="w-4 h-4 text-nasek-teal"></i>
+                </div>
+            </div>
+            <!-- اليوم والتاريخ -->
+            <div class="flex items-center justify-between">
+                <span class="text-[10px] text-nasek-textMuted font-bold">اليوم</span>
+                <div class="flex items-center space-x-reverse space-x-1.5 font-bold text-nasek-darkBlue text-left">
+                    <div class="text-right">
+                        <span class="block">الأحد</span>
+                        <span class="block text-[10px] text-nasek-textMuted font-normal">25 مايو 2025</span>
+                    </div>
+                    <i data-lucide="calendar" class="w-4 h-4 text-nasek-teal"></i>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- شبكة الخدمات الثمانية (8 Service Cards) -->
+    <main class="grid grid-cols-4 gap-5 my-auto">
+
+        <!-- بطاقة 1: خدمة الاستفسار -->
+        <div class="bg-white rounded-2xl border border-nasek-border p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-200 relative group cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-sky-50 text-nasek-teal flex items-center justify-center mb-4">
+                <i data-lucide="help-circle" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-nasek-darkBlue text-base mb-2">خدمة الاستفسار</h3>
+            <p class="text-xs text-nasek-textMuted leading-relaxed max-w-[200px] mb-6">استقبال استفسارات المستفيدين ومعالجتها الاستعلام عن مقدمة الخدمة والموظفين المناوبين</p>
+            <div class="text-nasek-teal group-hover:translate-x-[-4px] transition-transform duration-200 mt-auto">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- بطاقة 2: خدمة التوجيه -->
+        <div class="bg-white rounded-2xl border border-nasek-border p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-200 relative group cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center mb-4">
+                <i data-lucide="split" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-nasek-darkBlue text-base mb-2">خدمة التوجيه</h3>
+            <p class="text-xs text-nasek-textMuted leading-relaxed max-w-[200px] mb-6">توجيه المستفيد إلى الجهة أو الموقع المناسب</p>
+            <div class="text-purple-500 group-hover:translate-x-[-4px] transition-transform duration-200 mt-auto">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- بطاقة 3: خدمة الترجمة الفورية -->
+        <div class="bg-white rounded-2xl border border-nasek-border p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-200 relative group cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mb-4">
+                <i data-lucide="languages" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-nasek-darkBlue text-base mb-2">خدمة الترجمة الفورية</h3>
+            <p class="text-xs text-nasek-textMuted leading-relaxed max-w-[200px] mb-6">دعم الترجمة الفورية للتواصل مع المستفيد</p>
+            <div class="text-blue-500 group-hover:translate-x-[-4px] transition-transform duration-200 mt-auto">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- بطاقة 4: طلب الإرشاد -->
+        <div class="bg-white rounded-2xl border border-nasek-border p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-200 relative group cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-sky-50 text-nasek-teal flex items-center justify-center mb-4">
+                <i data-lucide="compass" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-nasek-darkBlue text-base mb-2">طلب الإرشاد</h3>
+            <p class="text-xs text-nasek-textMuted leading-relaxed max-w-[200px] mb-6">طلب إرشاد من المشرف أو الجهة المختصة</p>
+            <div class="text-nasek-teal group-hover:translate-x-[-4px] transition-transform duration-200 mt-auto">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- بطاقة 5: طلب إضافة تقييم المستفيد -->
+        <div class="bg-white rounded-2xl border border-nasek-border p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-200 relative group cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mb-4">
+                <i data-lucide="star-off" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-nasek-darkBlue text-base mb-2">طلب إضافة تقييم المستفيد</h3>
+            <p class="text-xs text-nasek-textMuted leading-relaxed max-w-[200px] mb-6">إضافة تقييم للمستفيد عن الخدمة المقدمة</p>
+            <div class="text-emerald-500 group-hover:translate-x-[-4px] transition-transform duration-200 mt-auto">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- بطاقة 6: طلب طباعة ورفع بيانات اليوم للموظفين -->
+        <div class="bg-white rounded-2xl border border-nasek-border p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-200 relative group cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-500 flex items-center justify-center mb-4">
+                <i data-lucide="printer" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-nasek-darkBlue text-base mb-2">طلب طباعة ورفع بيانات اليوم للموظفين</h3>
+            <p class="text-xs text-nasek-textMuted leading-relaxed max-w-[200px] mb-6">طباعة ورفع بيانات اليوم للموظفين</p>
+            <div class="text-indigo-500 group-hover:translate-x-[-4px] transition-transform duration-200 mt-auto">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- بطاقة 7: طلب رفع احتياج خدمة في المركز والصيانة -->
+        <div class="bg-white rounded-2xl border border-nasek-border p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-200 relative group cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mb-4">
+                <i data-lucide="wrench" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-nasek-darkBlue text-base mb-2">طلب رفع احتياج خدمة في المركز والصيانة</h3>
+            <p class="text-xs text-nasek-textMuted leading-relaxed max-w-[200px] mb-6">رفع طلب احتياج خدمة أو صيانة في المركز</p>
+            <div class="text-amber-500 group-hover:translate-x-[-4px] transition-transform duration-200 mt-auto">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- بطاقة 8: طلب التحقق والمساندة -->
+        <div class="bg-white rounded-2xl border border-nasek-border p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-200 relative group cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-sky-50 text-nasek-teal flex items-center justify-center mb-4">
+                <i data-lucide="shield" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-nasek-darkBlue text-base mb-2">طلب التحقق والمساندة</h3>
+            <p class="text-xs text-nasek-textMuted leading-relaxed max-w-[200px] mb-6">طلب التحقق أو المساندة من المشرف أو الفريق المختص</p>
+            <div class="text-nasek-teal group-hover:translate-x-[-4px] transition-transform duration-200 mt-auto">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- الفوتر (أسفل الصفحة) -->
+    <footer class="w-full text-center text-[11px] text-nasek-textMuted border-t border-slate-200/60 pt-4 mt-6">
+        <span>نسخة 1.0.0</span>
+        <span class="mx-2">|</span>
+        <span>جميع الحقوق محفوظة</span>
+    </footer>
+
+    <!-- تهيئة أيقونات Lucide -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                try {
+                    window.lucide.createIcons();
+                } catch (e) {
+                    console.warn("Failed to render Lucide Icons", e);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
